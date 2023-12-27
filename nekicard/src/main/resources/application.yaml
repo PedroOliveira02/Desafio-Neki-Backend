@@ -1,0 +1,15 @@
+spring:
+    datasource:
+        driver-class-name: org.postgresql.Driver
+        url: jdbc:postgresql://localhost:5432/nekicard?useTimezone=true&serverTimezone=UTC
+        username: nekicard
+        password: neki123@
+    jpa:
+        hibernate:
+            ddl-auto: update
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+server:
+  error:
+    include-stacktrace: never
