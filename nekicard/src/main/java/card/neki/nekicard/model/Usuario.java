@@ -2,10 +2,8 @@ package card.neki.nekicard.model;
 
 import java.time.LocalDate;
 
-import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import card.neki.nekicard.dto.UsuarioDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,7 +29,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 public class Usuario {
-  
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;

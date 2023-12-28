@@ -13,3 +13,10 @@ spring:
 server:
   error:
     include-stacktrace: never
+
+api:
+    security:
+        token:
+            secret: ${JWT_SECRET:my-secret-key}
+cors:
+  originPatterns: http://localhost:3000,http://localhost:8080

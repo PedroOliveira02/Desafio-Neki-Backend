@@ -1,10 +1,10 @@
 package card.neki.nekicard.infra.exceptions;
 
-public class EmailCadastradoException extends RuntimeException {
+public class TokenGenerationException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
-    public EmailCadastradoException(String ex) {
+    public TokenGenerationException(String ex) {
         super(ex);
     }
 }

@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import card.neki.nekicard.dto.UsuarioDto;
@@ -29,7 +28,7 @@ public class UsuarioService {
     Usuario usuario = usuarioRepository.getReferenceById(id);
     Usuario usuarioExistente = usuarioRepository.findByEmail(usuarioDto.email());
     if (usuarioExistente != null && !usuarioExistente.getId().equals(id)) {
-        throw new EmailCadastradoException("Email já cadastrado");
+      throw new EmailCadastradoException("Email já cadastrado");
     }
     usuario.setNomeCompleto(usuarioDto.nomeCompleto());
     usuario.setNomeSocial(usuarioDto.nomeSocial());
@@ -47,7 +46,7 @@ public class UsuarioService {
 
   public void remover(Long id) {
     if (!usuarioRepository.existsById(id)) {
-        throw new EntityNotFoundException();
+      throw new EntityNotFoundException();
     }
     usuarioRepository.deleteById(id);
   }

@@ -21,9 +21,10 @@ public class AdministradorDataLoader implements ApplicationRunner {
       Administrador administrador = new Administrador();
       administrador.setNome("Pedro");
       administrador.setEmail("pedro@neki.com.br");
-      administrador.setSenha("12345");
+      administrador.setSenha("$2a$10$JieEk28NBcdw3n3oZr4QYeFC1sSP/rlyoWIStpGiXCF06m.N5im22");
+      // Senha Criptografada igual a: 12345
       administradorRepository.save(administrador);
     }
   }
-  
+
 }

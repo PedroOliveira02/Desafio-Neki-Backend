@@ -1,10 +1,10 @@
 package card.neki.nekicard.infra.exceptions;
 
-public class EmailCadastradoException extends RuntimeException {
+public class UnauthorizedException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
-    public EmailCadastradoException(String ex) {
+    public UnauthorizedException(String ex) {
         super(ex);
     }
 }
