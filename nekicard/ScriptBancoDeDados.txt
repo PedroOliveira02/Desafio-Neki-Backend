@@ -1,0 +1,56 @@
+-- DROP SCHEMA public;
+
+CREATE SCHEMA public AUTHORIZATION pg_database_owner;
+
+-- DROP SEQUENCE public.administrador_id_seq;
+
+CREATE SEQUENCE public.administrador_id_seq
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START 1
+	CACHE 1
+	NO CYCLE;
+-- DROP SEQUENCE public.usuario_id_seq;
+
+CREATE SEQUENCE public.usuario_id_seq
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START 1
+	CACHE 1
+	NO CYCLE;-- public.administrador definition
+
+-- Drop table
+
+-- DROP TABLE public.administrador;
+
+CREATE TABLE public.administrador (
+	id bigserial NOT NULL,
+	email varchar(80) NOT NULL,
+	nome varchar(80) NOT NULL,
+	senha varchar(80) NOT NULL,
+	CONSTRAINT administrador_pkey PRIMARY KEY (id)
+);
+
+
+-- public.usuario definition
+
+-- Drop table
+
+-- DROP TABLE public.usuario;
+
+CREATE TABLE public.usuario (
+	data_nascimento date NOT NULL,
+	id bigserial NOT NULL,
+	telefone varchar(15) NULL,
+	nome_completo varchar(80) NOT NULL,
+	nome_social varchar(80) NULL,
+	email varchar(255) NOT NULL,
+	facebook varchar(255) NULL,
+	github varchar(255) NULL,
+	instagram varchar(255) NULL,
+	linked_in varchar(255) NULL,
+	foto bytea NOT NULL,
+	CONSTRAINT usuario_pkey PRIMARY KEY (id)
+);

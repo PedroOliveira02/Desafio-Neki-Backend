@@ -25,6 +25,6 @@ public class AdministradorDto {
   String email;
 
   @NotBlank
-  @Size(max = 80)
+  @Size(min = 5, max = 80)
   String senha;
 }

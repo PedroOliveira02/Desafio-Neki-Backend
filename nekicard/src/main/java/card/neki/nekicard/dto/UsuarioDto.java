@@ -25,10 +25,10 @@ public record UsuarioDto(
 
     @NotBlank @Email @Pattern(regexp = ".+@(neki-it\\.com\\.br|neki\\.com\\.br)$", message = "O e-mail deve terminar com @neki-it.com.br ou @neki.com.br") String email,
 
-    @Size(max = 15) String telefone,
+    @Size(min = 11, max = 18) String telefone,
 
-    String linkedIn,
-    String github,
-    String facebook,
-    String instagram) {
+    @Size(min = 10) String linkedIn,
+    @Size(min = 10) String github,
+    @Size(min = 10) String facebook,
+    @Size(min = 10) String instagram) {
 }
