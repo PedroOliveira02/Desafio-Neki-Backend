@@ -33,7 +33,7 @@ public class SecurityConfigurations implements WebMvcConfigurer {
   public void addCorsMappings(CorsRegistry registry) {
     var allowedOrigins = corsOriginPatterns.split(",");
     registry.addMapping("/**")
-        .allowedMethods("GET", "POST", "PUT")
+        .allowedMethods("GET", "POST", "PUT", "DELETE")
         .allowedMethods("*")
         .allowedOrigins(allowedOrigins)
         .allowCredentials(true);
@@ -46,6 +46,7 @@ public class SecurityConfigurations implements WebMvcConfigurer {
         .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(req -> {
           req.requestMatchers(HttpMethod.POST, "/auth").permitAll();
+          req.requestMatchers(HttpMethod.POST, "/administradores").permitAll();
           req.requestMatchers("/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**").permitAll();
           req.anyRequest().authenticated();
         })

@@ -24,7 +24,6 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/administradores")
-@SecurityRequirement(name = "bearerAuth")
 @Tag(name = "Administradores", description = "Endpoints dos Administradores")
 public class AdministradorController {
 
@@ -50,7 +49,8 @@ public class AdministradorController {
     var uri = uriBuilder.path("/administradores/{id}").buildAndExpand(administradorId).toUri();
     return ResponseEntity.created(uri).body(administradorSalvo);
   }
-
+  
+  @SecurityRequirement(name = "bearerAuth")
   @DeleteMapping("/{id}")
   @Operation(summary = "Deleta um Administrador", description = "Deleta um Administrador selecionado pelo id", tags = {
       "Administradores" }, responses = {

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import card.neki.nekicard.infra.exceptions.EmailCadastradoException;
 import card.neki.nekicard.infra.exceptions.LoginBadRequestException;
+import card.neki.nekicard.infra.exceptions.ResourceNotFoundException;
 import card.neki.nekicard.infra.exceptions.TokenGenerationException;
 import card.neki.nekicard.infra.exceptions.UnauthorizedException;
 import jakarta.persistence.EntityNotFoundException;
@@ -57,6 +58,12 @@ public class RestExceptionHandler {
 
   @ExceptionHandler(UnauthorizedException.class)
   public ResponseEntity<?> handleUnauthorizedException(UnauthorizedException ex) {
+    DadosErroValidacao erro = new DadosErroValidacao("token", ex.getMessage());
+    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(List.of(erro));
+  }
+
+  @ExceptionHandler(ResourceNotFoundException.class)
+  public ResponseEntity<?> ResourceNotFoundException(ResourceNotFoundException ex) {
     DadosErroValidacao erro = new DadosErroValidacao("token", ex.getMessage());
     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(List.of(erro));
   }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import card.neki.nekicard.dto.UsuarioDto;
 import card.neki.nekicard.infra.exceptions.EmailCadastradoException;
+import card.neki.nekicard.infra.exceptions.ResourceNotFoundException;
 import card.neki.nekicard.model.Usuario;
 import card.neki.nekicard.repository.UsuarioRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -21,6 +22,7 @@ public class UsuarioService {
   public Usuario salvar(UsuarioDto usuarioDto) {
     emailExistente(usuarioDto.email());
     Usuario usuario = converterDtoParaModel(usuarioDto);
+   
     return usuarioRepository.save(usuario);
   }
 
@@ -33,7 +35,7 @@ public class UsuarioService {
     usuario.setNomeCompleto(usuarioDto.nomeCompleto());
     usuario.setNomeSocial(usuarioDto.nomeSocial());
     usuario.setDataNascimento(usuarioDto.dataNascimento());
-    usuario.setFoto(usuarioDto.foto());
+    // usuario.setFoto(usuarioDto.foto());
     usuario.setEmail(usuarioDto.email());
     usuario.setTelefone(usuarioDto.telefone());
     usuario.setLinkedIn(usuarioDto.linkedIn());
@@ -52,7 +54,7 @@ public class UsuarioService {
   }
 
   public UsuarioDto buscarPorId(Long id) {
-    Usuario usuario = usuarioRepository.getReferenceById(id);
+    Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
     return converterModelParaDto(usuario);
   }
 
@@ -68,7 +70,6 @@ public class UsuarioService {
     usuario.setNomeCompleto(usuarioDto.nomeCompleto());
     usuario.setNomeSocial(usuarioDto.nomeSocial());
     usuario.setDataNascimento(usuarioDto.dataNascimento());
-    usuario.setFoto(usuarioDto.foto());
     usuario.setEmail(usuarioDto.email());
     usuario.setTelefone(usuarioDto.telefone());
     usuario.setLinkedIn(usuarioDto.linkedIn());
@@ -99,4 +100,16 @@ public class UsuarioService {
       throw new EmailCadastradoException("Email já cadastrado");
     }
   }
+
+  public Usuario findById(Long id) {
+    return usuarioRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Usuário não encontrado"));
+  }
+
+  public Usuario saveFoto(Long id, byte[] foto) {
+    Usuario usuarioSalvo = findById(id);
+    usuarioSalvo.setFoto(foto);
+    return usuarioRepository.save(usuarioSalvo);
+}
+
+
 }

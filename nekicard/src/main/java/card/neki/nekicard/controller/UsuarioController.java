@@ -1,5 +1,6 @@
 package card.neki.nekicard.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +13,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import card.neki.nekicard.Service.UsuarioService;
 import card.neki.nekicard.dto.UsuarioDto;
 import card.neki.nekicard.model.Usuario;
+import card.neki.nekicard.repository.UsuarioRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -33,6 +37,9 @@ public class UsuarioController {
 
   @Autowired
   UsuarioService usuarioService;
+
+  @Autowired
+  UsuarioRepository usuarioRepository;
 
   @GetMapping
   @Operation(summary = "Busca todos os usuarios", description = "Busca todos os cards dos usuarios", tags = {
@@ -59,6 +66,7 @@ public class UsuarioController {
     return ResponseEntity.ok(usuarioService.buscarPorId(id));
   }
 
+  // @Transactional
   @PostMapping
   @Operation(summary = "Adiciona novo usuário", description = "Adiciona um card de um novo usuário ", tags = {
       "Usuarios" }, responses = {
@@ -67,11 +75,25 @@ public class UsuarioController {
           @ApiResponse(description = "Forbidden", responseCode = "403", content = @Content),
           @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content),
       })
-  public ResponseEntity<Usuario> salvar(@Valid @RequestBody UsuarioDto usuarioDto, UriComponentsBuilder uriBuilder) {
+  public ResponseEntity<?> salvar(@Valid @RequestBody UsuarioDto usuarioDto, UriComponentsBuilder uriBuilder) {
     Usuario usuarioSalvo = usuarioService.salvar(usuarioDto);
     Long usuarioId = usuarioSalvo.getId();
     var uri = uriBuilder.path("/usuarios/{id}").buildAndExpand(usuarioId).toUri();
     return ResponseEntity.created(uri).body(usuarioSalvo);
+  }
+
+  @PostMapping("/{id}/foto")
+  @Operation(summary = "Adiciona foto do usuário", description = "Adiciona uma foto no card de um novo usuário ", tags = {
+      "Usuarios" }, responses = {
+          @ApiResponse(description = "Created", responseCode = "201"),
+          @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+          @ApiResponse(description = "Forbidden", responseCode = "403", content = @Content),
+          @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content),
+      })
+  public ResponseEntity<?> saveFoto(@RequestParam("foto") MultipartFile foto, @PathVariable Long id) throws IOException {
+    byte[] data = foto.getBytes();
+    usuarioService.saveFoto(id, data);
+    return ResponseEntity.ok("Imagem salva com sucesso!");
   }
 
   @PutMapping("/{id}")

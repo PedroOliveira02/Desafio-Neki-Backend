@@ -2,6 +2,8 @@
 
 CREATE SCHEMA public AUTHORIZATION pg_database_owner;
 
+COMMENT ON SCHEMA public IS 'standard public schema';
+
 -- DROP SEQUENCE public.administrador_id_seq;
 
 CREATE SEQUENCE public.administrador_id_seq
@@ -43,7 +45,7 @@ CREATE TABLE public.administrador (
 CREATE TABLE public.usuario (
 	data_nascimento date NOT NULL,
 	id bigserial NOT NULL,
-	telefone varchar(15) NULL,
+	telefone varchar(18) NULL,
 	nome_completo varchar(80) NOT NULL,
 	nome_social varchar(80) NULL,
 	email varchar(255) NOT NULL,
@@ -51,6 +53,6 @@ CREATE TABLE public.usuario (
 	github varchar(255) NULL,
 	instagram varchar(255) NULL,
 	linked_in varchar(255) NULL,
-	foto bytea NOT NULL,
+	foto bytea NULL,
 	CONSTRAINT usuario_pkey PRIMARY KEY (id)
 );

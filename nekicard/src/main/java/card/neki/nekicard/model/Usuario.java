@@ -12,7 +12,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
@@ -42,12 +41,11 @@ public class Usuario {
   private String nomeSocial;
 
   @NotNull
-  @DateTimeFormat(pattern = "dd-MM-yyyy")
+  @DateTimeFormat(pattern = "dd/MM/yyyy")
   @Column(nullable = false, name = "data_nascimento")
   private LocalDate dataNascimento;
 
-  @NotEmpty
-  @Column(nullable = false)
+  @Column
   private byte[] foto;
 
   @NotBlank
@@ -56,7 +54,7 @@ public class Usuario {
   @Column(nullable = false)
   private String email;
 
-  @Column(length = 15)
+  @Column(length = 18)
   private String telefone;
 
   @Column(name = "linked_in")
